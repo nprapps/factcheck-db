@@ -39,7 +39,6 @@ def get_trump_tweets():
     else:
         tweet_start_date = datetime(2017, 1, 17, 0, 0, 0, 0, tzinfo=utc)
 
-
     for status in tweepy.Cursor(
         api.user_timeline, 
         screen_name='realDonaldTrump',
@@ -74,3 +73,10 @@ def create_authors():
             )
             author_object.save()
 
+@task
+def reset_db():
+    Claim.objects.all().delete()
+    Author.objects.all().delete()
+
+    get_trump_tweets()
+    create_authors()
