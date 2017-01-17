@@ -52,7 +52,7 @@ def get_trump_tweets():
         claim = Claim(
             claim_text=status.text,
             claim_type='twitter',
-            claim_date=status.created_at,
+            claim_date=utc_datetime,
             claim_source='http://twitter.com/realDonaldTrump/{0}'.format(status.id)
         )
         claim.save()
