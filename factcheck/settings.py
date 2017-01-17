@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'annotations.apps.AnnotationsConfig',
+    'django_summernote',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,6 +52,14 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'factcheck.urls'
+
+SUMMERNOTE_CONFIG = {
+    'toolbar': [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['para', ['ul', 'ol']],
+        ['insert', ['link']],
+    ],
+}
 
 TEMPLATES = [
     {

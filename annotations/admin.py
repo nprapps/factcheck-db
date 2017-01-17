@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django_summernote.admin import SummernoteModelAdmin
 
 from .models import Claim, Annotation, Author
 
@@ -11,6 +12,9 @@ class ClaimAdmin(admin.ModelAdmin):
 class AuthorAdmin(admin.ModelAdmin):
     ordering = ('first_name',)
 
+class AnnotationAdmin(SummernoteModelAdmin):
+    pass
+
 admin.site.register(Claim, ClaimAdmin)
-admin.site.register(Annotation)
+admin.site.register(Annotation, AnnotationAdmin)
 admin.site.register(Author, AuthorAdmin)
