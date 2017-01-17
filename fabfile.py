@@ -1,10 +1,12 @@
-from fabric.api import task
-from fabric.contrib import django
-from django.core import serializers
-
 import json
 import os
+import pytz
 import tweepy
+
+from datetime import datetime
+from django.core import serializers
+from fabric.api import task
+from fabric.contrib import django
 
 # django setup
 django.settings_module('factcheck.settings')
@@ -29,12 +31,25 @@ def authenticate():
 @task
 def get_trump_tweets():
     api = authenticate()
+    
+    utc = pytz.timezone('UTC')
+
+    if len(Claim.objects.all()) > 0:
+        tweet_start_date = Claim.objects.latest('claim_date').claim_date
+    else:
+        tweet_start_date = datetime(2017, 1, 17, 0, 0, 0, 0, tzinfo=utc)
+
 
     for status in tweepy.Cursor(
         api.user_timeline, 
         screen_name='realDonaldTrump',
         trim_user=True
     ).items():
+        utc_datetime = utc.localize(status.created_at, is_dst=None)
+
+        if tweet_start_date >= utc_datetime:
+            return
+
         claim = Claim(
             claim_text=status.text,
             claim_type='twitter',
@@ -58,9 +73,4 @@ def create_authors():
                 author_page=author['page']
             )
             author_object.save()
-
-@task
-def write_json():
-    with open('annotations.json', 'w') as f:
-        from annotations.models import Annotation
 
