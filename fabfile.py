@@ -10,7 +10,7 @@ import tweepy
 django.settings_module('factcheck.settings')
 import django
 django.setup()
-from annotations.models import Annotation, Author, Claim
+from annotations.models import Author, Claim
 
 def authenticate():
     auth = tweepy.OAuthHandler(
@@ -62,20 +62,5 @@ def create_authors():
 @task
 def write_json():
     with open('annotations.json', 'w') as f:
-        annotations = Annotation.objects.all()
-        payload = []
+        from annotations.models import Annotation
 
-        for annotation in annotations:
-            data = {
-                'claim': annotation.claim.claim_text,
-                'type': annotation.claim.claim_type,
-                'source': annotation.claim.claim_source,
-                'annotation': annotation.annotation_text,
-                'author': '{0} {1}'.format(annotation.author.first_name, annotation.author.last_name),
-                'title': annotation.author.author_title,
-                'image': annotation.author.author_image,
-                'page': annotation.author.author_page
-            }
-            payload.append(data)
-        
-        json.dump(payload, f)
