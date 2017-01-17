@@ -1,5 +1,6 @@
 from fabric.api import task
 from fabric.contrib import django
+from django.core import serializers
 
 import json
 import os
@@ -9,7 +10,7 @@ import tweepy
 django.settings_module('factcheck.settings')
 import django
 django.setup()
-from annotations.models import Claim, Author
+from annotations.models import Annotation, Author, Claim
 
 def authenticate():
     auth = tweepy.OAuthHandler(
@@ -57,3 +58,24 @@ def create_authors():
                 author_page=author['page']
             )
             author_object.save()
+
+@task
+def write_json():
+    with open('annotations.json', 'w') as f:
+        annotations = Annotation.objects.all()
+        payload = []
+
+        for annotation in annotations:
+            data = {
+                'claim': annotation.claim.claim_text,
+                'type': annotation.claim.claim_type,
+                'source': annotation.claim.claim_source,
+                'annotation': annotation.annotation_text,
+                'author': '{0} {1}'.format(annotation.author.first_name, annotation.author.last_name),
+                'title': annotation.author.author_title,
+                'image': annotation.author.author_image,
+                'page': annotation.author.author_page
+            }
+            payload.append(data)
+        
+        json.dump(payload, f)
