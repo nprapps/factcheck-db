@@ -11,16 +11,18 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import app_config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+secrets = app_config.get_secrets()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['FACTCHECKDB_DJANGO_SECRET_KEY']
+SECRET_KEY = secrets['DJANGO_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -87,10 +89,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'factcheckdb',
-        'USER': os.environ['FACTCHECKDB_POSTGRES_USER'],
-        'PASSWORD': os.environ['FACTCHECKDB_POSTGRES_PASSWORD'],
-        'HOST': os.environ['FACTCHECKDB_POSTGRES_HOST'],
-        'PORT': os.environ['FACTCHECKDB_POSTGRES_PORT']
+        'USER': secrets['POSTGRES_USER'],
+        'PASSWORD': secrets['POSTGRES_PASSWORD'],
+        'HOST': secrets['POSTGRES_HOST'],
+        'PORT': secrets['POSTGRES_PORT']
     }
 }
 

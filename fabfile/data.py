@@ -16,13 +16,15 @@ django.setup()
 from annotations.models import Author, Claim
 
 def authenticate():
+    secrets = app_config.get_secrets()
+
     auth = tweepy.OAuthHandler(
-        os.environ['FACTCHECKDB_TWITTER_CONSUMER_KEY'], 
-        os.environ['FACTCHECKDB_TWITTER_CONSUMER_SECRET']
+        secrets['TWITTER_CONSUMER_KEY'], 
+        secrets['TWITTER_CONSUMER_SECRET']
     )
     auth.set_access_token(
-        os.environ['FACTCHECKDB_TWITTER_ACCESS_KEY'], 
-        os.environ['FACTCHECKDB_TWITTER_ACCESS_SECRET']
+        secrets['TWITTER_ACCESS_KEY'], 
+        secrets['TWITTER_ACCESS_SECRET']
     )
 
     api = tweepy.API(auth)
