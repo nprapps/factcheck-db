@@ -9,6 +9,7 @@ import logging
 
 from fabric.api import local, put, settings, require, run, sudo, task
 from fabric.state import env
+from jinja2 import Template
 
 import app_config
 

@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'factcheck.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'factchecks',
+        'NAME': 'factcheckdb',
         'USER': os.environ['FACTCHECKDB_POSTGRES_USER'],
         'PASSWORD': os.environ['FACTCHECKDB_POSTGRES_PASSWORD'],
         'HOST': os.environ['FACTCHECKDB_POSTGRES_HOST'],
