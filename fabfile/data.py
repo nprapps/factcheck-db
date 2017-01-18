@@ -1,12 +1,13 @@
+import app_config
 import json
 import os
 import pytz
 import tweepy
 
 from datetime import datetime
-from django.core import serializers
-from fabric.api import task
+from fabric.api import execute, hide, local, settings, shell_env, task
 from fabric.contrib import django
+from fabric.state import env
 
 # django setup
 django.settings_module('factcheck.settings')
@@ -72,6 +73,28 @@ def create_authors():
                 author_page=author['page']
             )
             author_object.save()
+
+@task
+def create_db():
+    with settings(warn_only=True), hide('output', 'running'):
+        if env.get('settings'):
+            execute('servers.stop_service', 'uwsgi')
+
+        with shell_env(**app_config.database):
+            local('dropdb --if-exists %s' % app_config.database['PGDATABASE'])
+
+        if not env.get('settings'):
+            local('psql -c "DROP USER IF EXISTS %s;"' % app_config.database['PGUSER'])
+            local('psql -c "CREATE USER %s WITH SUPERUSER PASSWORD \'%s\';"' % (app_config.database['PGUSER'], app_config.database['PGPASSWORD']))
+
+        with shell_env(**app_config.database):
+            local('createdb %s' % app_config.database['PGDATABASE'])
+            local('python manage.py migrate')
+            local('python manage.py makemigrations annotations')
+            local('python manage.py migrate annotations')
+
+        if env.get('settings'):
+            execute('servers.start_service', 'uwsgi')
 
 @task
 def reset_db():
