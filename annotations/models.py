@@ -22,7 +22,7 @@ class Author(models.Model):
         return '{0} {1}'.format(self.first_name, self.last_name)
 
 class Annotation(models.Model):
-    claim = models.ForeignKey(Claim, on_delete=models.CASCADE)
+    claims = models.ManyToManyField(Claim)
     annotation_text = models.TextField()
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
