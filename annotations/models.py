@@ -23,8 +23,9 @@ class Author(models.Model):
 
 class Annotation(models.Model):
     claims = models.ManyToManyField(Claim)
-    annotation_text = models.TextField()
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    annotation_text = models.TextField()
+    published = models.BooleanField(default=False)
 
     def __str__(self):
         return self.annotation_text

@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, m2m_changed
 from django.dispatch import receiver
 import json
 import subprocess
@@ -6,9 +6,10 @@ import subprocess
 from .models import Annotation
 
 @receiver(post_save, sender=Annotation)
+@receiver(m2m_changed, sender=Annotation.claims.through)
 def publish_json(sender, instance, **kwargs):
     with open('annotations.json', 'w') as f:
-        annotations = Annotation.objects.all()
+        annotations = Annotation.objects.filter(published=True)
         payload = []
         for annotation in annotations:
             claims = []
