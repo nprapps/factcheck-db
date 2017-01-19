@@ -14,6 +14,8 @@ class AuthorAdmin(admin.ModelAdmin):
     ordering = ('first_name',)
 
 class AnnotationAdmin(SummernoteModelAdmin):
+    filter_vertical = ('claims',)
+
     list_display = ('annotation_text_display', 'get_claims', 'author')
     def annotation_text_display(self, obj):
         from django.utils.html import strip_tags

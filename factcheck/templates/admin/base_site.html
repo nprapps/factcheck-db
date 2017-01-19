@@ -1,0 +1,13 @@
+{% extends "admin/base.html" %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">FactcheckDB</a></h1>
+{% endblock %}
+
+{% block extrahead %}
+<style>
+.stacked { width: 900px; }
+.stacked select { width: 890px; }
+.stacked .selector-available, .stacked .selector-chosen { width: 890px; }
+</style>
+{% endblock %}

@@ -66,7 +66,7 @@ SUMMERNOTE_CONFIG = {
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['factcheck/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
