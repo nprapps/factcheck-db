@@ -56,15 +56,15 @@ DEPLOY_CRONTAB = False
 # If True, DEPLOY_TO_SERVERS must also be True
 DEPLOY_SERVICES = False
 
-UWSGI_SOCKET_PATH = '/tmp/%s.uwsgi.sock' % PROJECT_FILENAME
+UWSGI_SOCKET_PATH = '/run/uwsgi/%s.uwsgi.sock' % PROJECT_FILENAME
 
 # Services are the server-side services we want to enable and configure.
 # A three-tuple following this format:
 # (service name, service deployment path, service config file extension)
 SERVER_SERVICES = [
-    ('app', SERVER_REPOSITORY_PATH, 'ini'),
+    ('app', '/etc/uwsgi/sites', 'ini'),
     ('uwsgi', '/etc/init', 'conf'),
-    ('nginx', '/etc/nginx/sites-enabled', 'conf'),
+    ('nginx', '/etc/nginx/sites-available', 'conf'),
 ]
 
 # These variables will be set at runtime. See configure_targets() below
