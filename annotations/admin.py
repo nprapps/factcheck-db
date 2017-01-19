@@ -13,6 +13,7 @@ class AuthorAdmin(admin.ModelAdmin):
     ordering = ('first_name',)
 
 class AnnotationAdmin(SummernoteModelAdmin):
+    list_display = ('annotation_text', 'author')
     pass
 
 admin.site.register(Claim, ClaimAdmin)
