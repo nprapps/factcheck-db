@@ -210,6 +210,7 @@ def deploy_confs():
                     sudo('initctl reload-configuration')
                     sudo('service %s restart' % service_name)
                 elif service == 'app':
+                    sudo('mkdir /run/uwsgi/')
                     sudo('touch %s' % app_config.UWSGI_SOCKET_PATH)
                     sudo('chmod 644 %s' % app_config.UWSGI_SOCKET_PATH)
                     sudo('chown www-data:www-data %s' % app_config.UWSGI_SOCKET_PATH)

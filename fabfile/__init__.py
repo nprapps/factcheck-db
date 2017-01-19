@@ -66,7 +66,7 @@ def branch(branch_name):
 
 @task
 def setup_django():
-    servers.create_db()
+    data.create_db()
     local('python manage.py migrate')
     local('python manage.py makemigrations annotations')
     local('python manage.py migrate annotations')
