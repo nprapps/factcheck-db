@@ -22,7 +22,7 @@ def publish_json(sender, instance, **kwargs):
         payload = []
         for annotation in annotations:
             claims = []
-            for claim in annotation.claims.all():
+            for claim in annotation.claims.all().order_by('claim_date'):
                 claim_data = {
                     'text': claim.claim_text,
                     'type': claim.claim_type,
@@ -46,6 +46,14 @@ def publish_json(sender, instance, **kwargs):
             }
             payload.append(data)
         
-        json.dump(payload, f)
+        sorted_annotations = sorted(payload, key=sort_annotations, reverse=True)
+        json.dump(sorted_annotations, f)
 
     subprocess.run(['aws', 's3', 'cp', 'annotations.json', 's3://{0}/{1}/'.format(S3_BUCKET, app_config.PROJECT_FILENAME), '--acl', 'public-read', '--cache-control', 'max-age=30'])
+
+
+def sort_annotations(block):
+    if len(block['claims']) > 0:
+        return block['claims'][-1]['date']
+    else:
+        return '0'
