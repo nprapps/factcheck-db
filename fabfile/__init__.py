@@ -72,4 +72,4 @@ def setup_django():
     local('python manage.py migrate annotations')
     local('python manage.py collectstatic')
     local('python manage.py createsuperuser')
-    servers.reset_db()
+    data.reset_db()
