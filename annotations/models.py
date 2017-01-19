@@ -28,4 +28,5 @@ class Annotation(models.Model):
     published = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.annotation_text
+        from django.utils.html import strip_tags
+        return strip_tags(self.annotation_text)
