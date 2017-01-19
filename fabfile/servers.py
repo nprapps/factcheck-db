@@ -202,8 +202,9 @@ def deploy_confs():
                 put(rendered_path, installed_path, use_sudo=True)
 
                 if service == 'nginx':
+                    sudo('rm /etc/nginx/sites-enabled/%s.nginx.conf' % app_config.PROJECT_FILENAME)
+                    sudo('ln -s /etc/nginx/sites-available/%s.nginx.conf /etc/nginx/sites-enabled' % app_config.PROJECT_FILENAME)
                     sudo('service nginx restart')
-                    sudo('ln -s /etc/nginx/sites-available/%s /etc/nginx/sites-enabled' % app_config.PROJECT_FILENAME)
                 elif service == 'uwsgi':
                     service_name = _get_installed_service_name(service)
                     sudo('initctl reload-configuration')
