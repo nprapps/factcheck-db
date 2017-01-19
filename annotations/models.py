@@ -10,6 +10,9 @@ class Claim(models.Model):
     def __str__(self):
         return self.claim_text
 
+    def twitter_id(self):
+        return self.claim_source.split('/')[-1]
+
 class Author(models.Model):
     initials = models.CharField(max_length=3)
     first_name = models.CharField(max_length=50)    
@@ -22,10 +25,10 @@ class Author(models.Model):
         return '{0} {1}'.format(self.first_name, self.last_name)
 
 class Annotation(models.Model):
+    published = models.BooleanField(default=False)
     claims = models.ManyToManyField(Claim)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     annotation_text = models.TextField()
-    published = models.BooleanField(default=False)
 
     def __str__(self):
         from django.utils.html import strip_tags

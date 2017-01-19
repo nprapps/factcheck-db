@@ -26,7 +26,7 @@ def publish_json(sender, instance, **kwargs):
                 claim_data = {
                     'text': claim.claim_text,
                     'type': claim.claim_type,
-                    'source': claim.claim_source,
+                    'id': claim.twitter_id(),
                     'date': claim.claim_date.isoformat()
                 }
 
