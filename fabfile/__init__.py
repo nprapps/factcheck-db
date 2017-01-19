@@ -63,3 +63,13 @@ def branch(branch_name):
     Work on any specified branch.
     """
     env.branch = branch_name
+
+@task
+def setup_django():
+    servers.create_db()
+    local('python manage.py migrate')
+    local('python manage.py makemigrations annotations')
+    local('python manage.py migrate annotations')
+    local('python manage.py collectstatic')
+    local('python manage.py createsuperuser')
+    servers.reset_db()

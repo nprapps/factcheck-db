@@ -91,9 +91,6 @@ def create_db():
 
         with shell_env(**app_config.database):
             local('createdb %s' % app_config.database['PGDATABASE'])
-            local('python manage.py migrate')
-            local('python manage.py makemigrations annotations')
-            local('python manage.py migrate annotations')
 
         if env.get('settings'):
             execute('servers.start_service', 'uwsgi')
