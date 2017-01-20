@@ -7,7 +7,7 @@ from django.db.models.signals import post_save, m2m_changed, post_delete
 from django.dispatch import receiver
 from .models import Annotation
 
-@receiver(post_save, sender=Annotation)
+@receiver(post_save)
 @receiver(m2m_changed, sender=Annotation.claims.through)
 @receiver(post_delete, sender=Annotation)
 def publish_json(sender, instance, **kwargs):
