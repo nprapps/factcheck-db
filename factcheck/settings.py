@@ -56,6 +56,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'factcheck.urls'
 
 SUMMERNOTE_CONFIG = {
+    'js': (
+        'http://apps.npr.org/factcheck/summernote-cleaner.js',
+    ),
     'toolbar': [
         ['style', ['bold', 'italic', 'underline', 'clear']],
         ['para', ['ul', 'ol']],
