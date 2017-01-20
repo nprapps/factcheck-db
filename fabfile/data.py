@@ -36,11 +36,12 @@ def get_trump_tweets():
     api = authenticate()
     
     utc = pytz.timezone('UTC')
+    et = pytz.timezone('US/Eastern')
 
     if len(Claim.objects.all()) > 0:
         tweet_start_date = Claim.objects.latest('claim_date').claim_date
     else:
-        tweet_start_date = datetime(2017, 1, 17, 0, 0, 0, 0, tzinfo=utc)
+        tweet_start_date = datetime(2017, 1, 20, 0, 0, 0, 0, tzinfo=et)
 
     for status in tweepy.Cursor(
         api.user_timeline, 
