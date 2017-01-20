@@ -73,3 +73,8 @@ def setup_django():
     local('python manage.py collectstatic')
     local('python manage.py createsuperuser')
     data.reset_db()
+
+@task
+def migrate_db():
+    local('python manage.py makemigrations')
+    local('python manage.py migrate')
