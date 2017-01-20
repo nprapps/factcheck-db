@@ -28,7 +28,8 @@ def publish_json(sender, instance, **kwargs):
                     'text': claim.claim_text,
                     'type': claim.claim_type,
                     'id': claim.twitter_id(),
-                    'date': claim.claim_date.isoformat()
+                    'date': claim.claim_date.isoformat(),
+                    'media': claim.show_media
                 }
 
                 claims.append(claim_data)
@@ -50,7 +51,7 @@ def publish_json(sender, instance, **kwargs):
         sorted_annotations = sorted(payload, key=sort_annotations, reverse=True)
         json.dump(sorted_annotations, f)
 
-    # subprocess.run(['aws', 's3', 'cp', 'annotations.json', 's3://{0}/{1}/'.format(S3_BUCKET, app_config.PROJECT_FILENAME), '--acl', 'public-read', '--cache-control', 'max-age=30'])
+    subprocess.run(['aws', 's3', 'cp', 'annotations.json', 's3://{0}/{1}/'.format(S3_BUCKET, app_config.PROJECT_FILENAME), '--acl', 'public-read', '--cache-control', 'max-age=30'])
 
 
 def sort_annotations(block):

@@ -2,11 +2,12 @@ from django.db import models
 
 # Create your models here.
 class Claim(models.Model):
-    claim_text = models.TextField()
-    claim_type = models.CharField(max_length=50)
     claim_date = models.DateTimeField()
     claim_source = models.URLField()
     claim_handle = models.CharField(max_length=20)
+    show_media = models.BooleanField(default=False)
+    claim_text = models.TextField()
+    claim_type = models.CharField(max_length=50)
 
     def __str__(self):
         return self.claim_text
@@ -28,6 +29,7 @@ class Author(models.Model):
 class Annotation(models.Model):
     published = models.BooleanField(default=False)
     claims = models.ManyToManyField(Claim)
+
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     annotation_text = models.TextField()
 
