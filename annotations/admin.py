@@ -7,7 +7,7 @@ from .models import Claim, Annotation, Author
 # Register your models here.
 
 class ClaimAdmin(admin.ModelAdmin):
-    list_display = ('claim_text', 'claim_type', 'claim_date')
+    list_display = ('claim_text', 'claim_handle', 'claim_date')
     ordering = ('-claim_date',)
 
 class AuthorAdmin(admin.ModelAdmin):

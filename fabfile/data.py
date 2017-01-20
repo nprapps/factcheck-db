@@ -43,23 +43,27 @@ def get_trump_tweets():
     else:
         tweet_start_date = datetime(2017, 1, 20, 0, 0, 0, 0, tzinfo=et)
 
-    for status in tweepy.Cursor(
-        api.user_timeline, 
-        screen_name='realDonaldTrump',
-        trim_user=True
-    ).items():
-        utc_datetime = utc.localize(status.created_at, is_dst=None)
+    all_tweets=[]
+    handles = ['realDonaldTrump', 'POTUS']
 
-        if tweet_start_date >= utc_datetime:
-            return
+    for handle in handles:
+        for status in tweepy.Cursor(
+            api.user_timeline, 
+            screen_name=handle,
+            trim_user=True
+        ).items():
+            utc_datetime = utc.localize(status.created_at, is_dst=None)
+            if tweet_start_date >= utc_datetime:
+                break
+            claim = Claim(
+                claim_text=status.text,
+                claim_type='twitter',
+                claim_date=utc_datetime,
+                claim_source='http://twitter.com/{0}/{1}'.format(handle, status.id),
+                claim_handle=handle
+            )
+            claim.save()
 
-        claim = Claim(
-            claim_text=status.text,
-            claim_type='twitter',
-            claim_date=utc_datetime,
-            claim_source='http://twitter.com/realDonaldTrump/{0}'.format(status.id)
-        )
-        claim.save()
 
 @task
 def create_authors():

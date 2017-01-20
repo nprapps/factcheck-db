@@ -6,6 +6,7 @@ class Claim(models.Model):
     claim_type = models.CharField(max_length=50)
     claim_date = models.DateTimeField()
     claim_source = models.URLField()
+    claim_handle = models.CharField(max_length=20)
 
     def __str__(self):
         return self.claim_text
