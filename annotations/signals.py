@@ -3,12 +3,13 @@ import json
 import os
 import subprocess
 
-from django.db.models.signals import post_save, m2m_changed
+from django.db.models.signals import post_save, m2m_changed, post_delete
 from django.dispatch import receiver
 from .models import Annotation
 
 @receiver(post_save, sender=Annotation)
 @receiver(m2m_changed, sender=Annotation.claims.through)
+@receiver(post_delete, sender=Annotation)
 def publish_json(sender, instance, **kwargs):
     DEPLOYMENT_TARGET = os.environ.get('DEPLOYMENT_TARGET', None)
 
@@ -49,7 +50,7 @@ def publish_json(sender, instance, **kwargs):
         sorted_annotations = sorted(payload, key=sort_annotations, reverse=True)
         json.dump(sorted_annotations, f)
 
-    subprocess.run(['aws', 's3', 'cp', 'annotations.json', 's3://{0}/{1}/'.format(S3_BUCKET, app_config.PROJECT_FILENAME), '--acl', 'public-read', '--cache-control', 'max-age=30'])
+    # subprocess.run(['aws', 's3', 'cp', 'annotations.json', 's3://{0}/{1}/'.format(S3_BUCKET, app_config.PROJECT_FILENAME), '--acl', 'public-read', '--cache-control', 'max-age=30'])
 
 
 def sort_annotations(block):
