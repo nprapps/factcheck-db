@@ -116,10 +116,8 @@ def audit_tweets():
 
         r = requests.head(url)
         if r.status_code == 404:
-            print(r.status_code)
-            print('{0} does not exist'.format(url))
+            print('{0} does not exist, {1}'.format(url, r.status_code))
             claim.exists = False
+            claim.save()
         else:
             print('{0} exists'.format(url))
-            claim.exists = True
-            continue
