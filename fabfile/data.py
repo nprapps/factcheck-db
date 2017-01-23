@@ -115,7 +115,7 @@ def audit_tweets():
         url = 'http://twitter.com/{0}/status/{1}'.format(claim.claim_handle, claim.twitter_id())
 
         r = requests.head(url)
-        if r.status_code == 200:
+        if r.status_code == requests.codes.ok:
             print('{0} exists'.format(url))
             claim.exists = True
             continue
