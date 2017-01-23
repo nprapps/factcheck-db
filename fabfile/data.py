@@ -119,5 +119,3 @@ def audit_tweets():
             print('{0} does not exist, {1}'.format(url, r.status_code))
             claim.exists = False
             claim.save()
-        else:
-            print('{0} exists'.format(url))

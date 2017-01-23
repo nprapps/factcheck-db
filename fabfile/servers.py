@@ -109,7 +109,7 @@ def install_crontab():
     """
     require('settings', provided_by=['production', 'staging'])
 
-    sudo('cp %(SERVER_REPOSITORY_PATH)s/crontab /etc/cron.d/%(PROJECT_FILENAME)s' % app_config.__dict__)
+    sudo('cp %(SERVER_REPOSITORY_PATH)s/cronjobs/* /etc/cron.d/')
 
 @task
 def uninstall_crontab():
