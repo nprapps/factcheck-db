@@ -117,5 +117,5 @@ def audit_tweets():
             continue
         else:
             print(r.status_code)
-            print('{0} does not exist'.format(claim.source))
+            print('{0} does not exist'.format(claim.claim_source))
             claim.exists = False
