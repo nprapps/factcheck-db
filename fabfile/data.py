@@ -112,10 +112,8 @@ def reset_db():
 @task
 def audit_tweets():
     for claim in Claim.objects.all():
-        url = 'https://twitter.com/{0}/status/{1}'.format(claim.claim_handle, claim.twitter_id())
-
-        r = requests.head(url)
+        r = requests.head(claim.claim_source)
         if r.status_code == 404:
-            print('{0} does not exist, {1}'.format(url, r.status_code))
+            print('{0} does not exist, {1}'.format(claim.claim_source, r.status_code))
             claim.exists = False
             claim.save()
