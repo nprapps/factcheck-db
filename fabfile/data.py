@@ -112,7 +112,7 @@ def reset_db():
 @task
 def audit_tweets():
     for claim in Claim.objects.all():
-        url = 'http://twitter.com/{0}/status/{1}'.format(claim.claim_handle, claim.twitter_id())
+        url = 'https://twitter.com/{0}/status/{1}'.format(claim.claim_handle, claim.twitter_id())
 
         r = requests.head(url)
         if r.status_code == requests.codes.ok:
