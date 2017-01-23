@@ -60,7 +60,7 @@ def get_trump_tweets():
                 claim_text=status.text,
                 claim_type='twitter',
                 claim_date=utc_datetime,
-                claim_source='http://twitter.com/{0}/{1}'.format(handle, status.id),
+                claim_source='http://twitter.com/{0}/status/{1}'.format(handle, status.id),
                 claim_handle=handle
             )
             claim.save()
@@ -114,6 +114,7 @@ def audit_tweets():
     for claim in Claim.objects.all():
         r = requests.head(claim.claim_source)
         if r.status_code == 200:
+            claim.exists = True
             continue
         else:
             print(r.status_code)
