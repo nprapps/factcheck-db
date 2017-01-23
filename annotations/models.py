@@ -10,7 +10,7 @@ class Claim(models.Model):
     claim_type = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.claim_text
+        return '@{0}: {1}'.format(self.claim_handle, self.claim_text)
 
     def twitter_id(self):
         return self.claim_source.split('/')[-1]
