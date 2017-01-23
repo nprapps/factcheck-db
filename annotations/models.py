@@ -11,7 +11,12 @@ class Claim(models.Model):
     exists = models.BooleanField(default=True)
 
     def __str__(self):
-        return '@{0}: {1}'.format(self.claim_handle, self.claim_text)
+        base = '@{0}: {1}'.format(self.claim_handle, self.claim_text)
+
+        if self.exists:
+            return base
+        else:
+            return '[DELETED] {0}'.format(base)
 
     def twitter_id(self):
         return self.claim_source.split('/')[-1]
