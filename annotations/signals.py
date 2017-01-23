@@ -51,7 +51,8 @@ def publish_json(sender, instance, **kwargs):
         sorted_annotations = sorted(payload, key=sort_annotations, reverse=True)
         json.dump(sorted_annotations, f)
 
-    subprocess.run(['aws', 's3', 'cp', 'annotations.json', 's3://{0}/{1}/'.format(S3_BUCKET, app_config.PROJECT_FILENAME), '--acl', 'public-read', '--cache-control', 'max-age=30'])
+    if app_config.DEPLOYMENT_TARGET:
+        subprocess.run(['aws', 's3', 'cp', 'annotations.json', 's3://{0}/{1}/'.format(S3_BUCKET, app_config.PROJECT_FILENAME), '--acl', 'public-read', '--cache-control', 'max-age=30'])
 
 
 def sort_annotations(block):

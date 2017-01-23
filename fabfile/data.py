@@ -2,6 +2,7 @@ import app_config
 import json
 import os
 import pytz
+import requests
 import tweepy
 
 from datetime import datetime
@@ -107,3 +108,14 @@ def reset_db():
 
     get_trump_tweets()
     create_authors()
+
+@task
+def audit_tweets():
+    for claim in Claim.objects.all():
+        r = requests.head(claim.claim_source)
+        if r.status_code == 200:
+            continue
+        else:
+            print(r.status_code)
+            print('{0} does not exist'.format(claim.source))
+            claim.exists = False

@@ -8,6 +8,7 @@ class Claim(models.Model):
     show_media = models.BooleanField(default=False)
     claim_text = models.TextField()
     claim_type = models.CharField(max_length=50)
+    exists = models.BooleanField(default=True)
 
     def __str__(self):
         return '@{0}: {1}'.format(self.claim_handle, self.claim_text)

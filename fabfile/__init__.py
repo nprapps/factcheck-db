@@ -78,3 +78,8 @@ def setup_django():
 def migrate_db():
     local('python manage.py makemigrations')
     local('python manage.py migrate')
+
+@task
+def deploy_server():
+    servers.checkout_latest()
+    servers.restart_service('uwsgi')
