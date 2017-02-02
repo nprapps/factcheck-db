@@ -18,7 +18,7 @@ class AuthorAdmin(admin.ModelAdmin):
 class AnnotationAdmin(SummernoteModelAdmin):
     filter_vertical = ('claims',)
 
-    list_display = ('annotation_text_display', 'get_claims', 'author')
+    list_display = ('annotation_text_display', 'get_claims', 'author', 'published')
     def annotation_text_display(self, obj):
         from django.utils.html import strip_tags
         return strip_tags(obj.annotation_text)
