@@ -41,4 +41,6 @@ class Annotation(models.Model):
 
     def __str__(self):
         from django.utils.html import strip_tags
-        return strip_tags(self.annotation_text)
+        stripped = strip_tags(self.annotation_text)
+
+        return (stripped[:75] + '...') if len(stripped) > 75 else stripped

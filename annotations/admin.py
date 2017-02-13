@@ -21,7 +21,9 @@ class AnnotationAdmin(SummernoteModelAdmin):
     list_display = ('annotation_text_display', 'get_claims', 'author', 'published')
     def annotation_text_display(self, obj):
         from django.utils.html import strip_tags
-        return strip_tags(obj.annotation_text)
+        stripped = strip_tags(obj.annotation_text)
+        return (stripped[:100] + '...') if len(stripped) > 100 else stripped
+
     annotation_text_display.short_description = 'Annotation'
 
     def get_claims(self, obj):
