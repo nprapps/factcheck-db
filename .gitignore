@@ -3,3 +3,4 @@ migrations
 annotations.json
 *.pyc
 confs/rendered
+static
