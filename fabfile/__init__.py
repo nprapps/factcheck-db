@@ -65,6 +65,10 @@ def branch(branch_name):
     env.branch = branch_name
 
 @task
+def collect_static():
+    local('python manage.py collectstatic')
+
+@task
 def setup_django():
     data.create_db()
     local('python manage.py makemigrations annotations')
