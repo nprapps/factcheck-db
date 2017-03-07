@@ -1,6 +1,7 @@
+from django import forms
 from django.contrib import admin
-from django_summernote.admin import SummernoteModelAdmin
 from django.utils.html import escape
+from redactor.widgets import RedactorEditor
 
 from .models import Claim, Annotation, Author
 
@@ -15,7 +16,17 @@ class ClaimAdmin(admin.ModelAdmin):
 class AuthorAdmin(admin.ModelAdmin):
     ordering = ('first_name',)
 
-class AnnotationAdmin(SummernoteModelAdmin):
+
+class AnnotationAdminForm(forms.ModelForm):
+    class Meta:
+        model = Annotation
+        fields = ['published', 'claims', 'author', 'annotation_text']
+        widgets = {
+            'annotation_text': RedactorEditor()
+        }
+
+class AnnotationAdmin(admin.ModelAdmin):
+    form = AnnotationAdminForm
     filter_vertical = ('claims',)
 
     list_display = ('annotation_text_display', 'get_claims', 'author', 'published')
@@ -29,6 +40,7 @@ class AnnotationAdmin(SummernoteModelAdmin):
     def get_claims(self, obj):
         return "\n".join([c.claim_text for c in obj.claims.all().order_by('claim_date')])
     get_claims.short_description = 'Claims'
+
 
 admin.site.register(Claim, ClaimAdmin)
 admin.site.register(Annotation, AnnotationAdmin)

@@ -27,20 +27,20 @@ SECRET_KEY = secrets['DJANGO_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '54.221.137.2', '54.221.31.112']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '54.221.137.2', '54.221.31.112']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'annotations.apps.AnnotationsConfig',
-    'django_summernote',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'redactor'
 ]
 
 MIDDLEWARE = [
@@ -55,16 +55,16 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'factcheck.urls'
 
-SUMMERNOTE_CONFIG = {
-    'js': (
-        'http://apps.npr.org/factcheck/summernote-cleaner.js',
-    ),
-    'toolbar': [
-        ['style', ['bold', 'italic', 'underline', 'clear']],
-        ['para', ['ul', 'ol']],
-        ['insert', ['link']],
-    ],
+REDACTOR_OPTIONS = {
+    'buttons': ['bold', 'italic', 'underline', 'lists', 'link'],
+    'lang': 'en',
+    'linkify': False,
+    'minHeight': 300,
+    'pastePlainText': True,
+    'pasteImages': False,
+    'pasteLinks': True
 }
+REDACTOR_UPLOAD = 'uploads/'
 
 TEMPLATES = [
     {

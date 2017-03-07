@@ -19,5 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^annotations/', include('annotations.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^summernote/', include('django_summernote.urls'))
+    url(r'^redactor/', include('redactor.urls')),
 ]
