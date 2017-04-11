@@ -67,6 +67,8 @@ You'll need to ensure that the software listed above is installed on the server.
 
 ```
 export DEPLOYMENT_TARGET="staging"
+export AWS_ACCESS_KEY_ID="yourawsaccesskey"
+export AWS_SECRET_ACCESS_KEY="yourawssecretaccesskey"
 export factcheckdb_POSTGRES_USER="yourusername"
 export factcheckdb_POSTGRES_PASSWORD="yourpassword"
 export factcheckdb_POSTGRES_HOST="yourpostgreshost"
