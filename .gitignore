@@ -4,3 +4,4 @@ annotations.json
 *.pyc
 confs/rendered
 static
+tweets.csv

@@ -1,4 +1,5 @@
 import app_config
+import csv
 import json
 import os
 import pytz
@@ -117,3 +118,26 @@ def audit_tweets():
             print('{0} does not exist, {1}'.format(claim.claim_source, r.status_code))
             claim.exists = False
             claim.save()
+
+@task
+def export_tweets():
+    tweets = Claim.objects.all()
+
+    with open('tweets.csv', 'w') as f:
+        writer = csv.writer(f)
+        writer.writerow([
+            'date',
+            'handle',
+            'text',
+            'url',
+            'exists'
+        ])
+
+        for tweet in tweets:
+            writer.writerow([
+                tweet.claim_date,
+                tweet.claim_handle,
+                tweet.claim_text,
+                tweet.claim_source,
+                tweet.exists
+            ])
