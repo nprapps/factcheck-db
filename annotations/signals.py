@@ -66,7 +66,7 @@ def publish_tweets(sender, instance, **kwargs):
     claims = Claim.objects.all()
     header_row = []
 
-    with open('tweets.csv', 'w') as f:
+    with open('tweets.csv', 'w', encoding='utf-8') as f:
         writer = csv.writer(f)
 
         for field in model_fields:
