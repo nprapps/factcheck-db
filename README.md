@@ -21,6 +21,8 @@ Factcheck DB does the following things:
 
 ## Set up Factcheck DB
 
+*If you work at NPR, then the proper environment variables are stored in our shared env file.*
+
 First, ensure you have created a Twitter app so that you can download the tweets. Store your consumer key, consumer secret, access token and access secret as environment variables. You should also store your local PostgreSQL settings.
 
 ```
