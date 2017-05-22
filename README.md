@@ -9,6 +9,7 @@ Factcheck DB does the following things:
 1. Downloads tweets from @realDonaldTrump and @POTUS every minute via a cron job, and logs new ones to a database.
 2. Sets up a Django admin for creating annotations on the tweets in the database.
 3. Publishes JSON to Amazon S3 for use in graphics.
+4. Publishes a CSV of [all collected tweets](https://apps.npr.org/factcheck/tweets.csv) to Amazon S3 for static analysis.
 
 ## Prerequisites
 
